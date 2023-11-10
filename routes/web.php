@@ -1,12 +1,9 @@
 <?php
 
 
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EventController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -38,11 +35,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth']], function () {
     Route::get('/userProfile', [DashboardController::class, 'ProfilePage']);
     // User Logout
     Route::get('/logout', [UserController::class, 'UserLogout']);
-    Route::get('/categoryPage', [CategoryController::class, 'CategoryPage']);
     Route::get('/postPage', [PostController::class, 'postPage']);
-    Route::get('/eventPage', [EventController::class, 'EventPage']);
-    Route::get('/reportPage', [ReportController::class, 'index']);
-
 
     Route::post('/reset-password', [UserController::class, 'ResetPassword']);
     Route::get('/user-profile', [DashboardController::class, 'UserProfile']);
@@ -74,19 +67,5 @@ Route::group(['prefix' => '', 'middleware' => ['auth']], function () {
         Route::post("/update-permission", [PermissionController::class, 'update']);
         Route::post("/permission-by-id", [PermissionController::class, 'show']);
     });
-
-    // Category API
-    Route::post("/create-category", [CategoryController::class, 'CategoryCreate']);
-    Route::get("/list-category", [CategoryController::class, 'CategoryList']);
-    Route::post("/delete-category", [CategoryController::class, 'CategoryDelete']);
-    Route::post("/update-category", [CategoryController::class, 'CategoryUpdate']);
-    Route::post("/category-by-id", [CategoryController::class, 'CategoryByID']);
-
-    // Event API
-    Route::post("/create-event", [EventController::class, 'EventCreate']);
-    Route::get("/list-event", [EventController::class, 'EventList']);
-    Route::post("/delete-event", [EventController::class, 'EventDelete']);
-    Route::post("/update-event", [EventController::class, 'EventUpdate']);
-    Route::post("/event-by-id", [EventController::class, 'EventByID']);
 
 });
