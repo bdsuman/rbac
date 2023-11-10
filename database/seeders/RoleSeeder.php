@@ -63,6 +63,7 @@ class RoleSeeder extends Seeder
 
         $admin = new User();
         $admin->name = 'Admin';
+        $admin->role = 'Super Admin';
         $admin->email = 'admin@gmail.com';
         $admin->password = bcrypt('123456');
         $admin->save();

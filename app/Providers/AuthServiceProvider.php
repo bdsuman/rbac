@@ -36,9 +36,10 @@ class AuthServiceProvider extends ServiceProvider
 //        Gate::define('isEmployee', function ($user) {
 //            return $user->role == 'employee';
 //        });
+
         // Implicitly grant "Admin" role all permissions
         Gate::before(function ($user, $ability) {
-            return $user->role == 'admin'? true : null;
+            return $user->role == 'Super Admin'? true : null;
         });
     }
 }

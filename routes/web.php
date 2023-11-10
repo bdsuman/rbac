@@ -4,6 +4,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth']], function () {
     // User Logout
     Route::get('/logout', [UserController::class, 'UserLogout']);
     Route::get('/categoryPage', [CategoryController::class, 'CategoryPage']);
+    Route::get('/postPage', [PostController::class, 'postPage']);
     Route::get('/eventPage', [EventController::class, 'EventPage']);
     Route::get('/reportPage', [ReportController::class, 'index']);
 
@@ -44,6 +46,15 @@ Route::group(['prefix' => '', 'middleware' => ['auth']], function () {
     Route::get('/user-profile', [DashboardController::class, 'UserProfile']);
     Route::post('/user-update', [DashboardController::class, 'UpdateProfile']);
     Route::post('/user-pass-update', [DashboardController::class, 'UpdatePassword']);
+
+
+    // Post API
+    Route::post("/create-post", [PostController::class, 'store']);
+    Route::get("/list-post", [PostController::class, 'index']);
+    Route::post("/delete-post", [PostController::class, 'destroy']);
+    Route::post("/update-post", [PostController::class, 'update']);
+    Route::post("/post-by-id", [PostController::class, 'show']);
+
 
     // Category API
     Route::post("/create-category", [CategoryController::class, 'CategoryCreate']);

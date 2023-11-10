@@ -80,6 +80,10 @@
         <i class="bi bi-list-nested"></i>
         <span class="side-bar-item-caption">Category</span>
     </a>
+    <a href="{{url("/postPage")}}" class="side-bar-item">
+        <i class="bi bi-calendar2-event"></i>
+        <span class="side-bar-item-caption">Post</span>
+    </a>
     <a href="{{url("/eventPage")}}" class="side-bar-item">
         <i class="bi bi-calendar2-event"></i>
         <span class="side-bar-item-caption">Event</span>
