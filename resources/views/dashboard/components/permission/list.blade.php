@@ -16,6 +16,7 @@
                 <thead>
                 <tr class="bg-light">
                     <th>No</th>
+                    <th>Name</th>
                     <th>Permission</th>
                     <th>Action</th>
                 </tr>
@@ -52,6 +53,7 @@ async function getList() {
         let row=`<tr>
                     <td>${index+1}</td>
                     <td>${item['name']}</td>
+                    <td>${item['role']}</td>
                     <td>
                         <button data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success">Edit</button>
                         <button data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger">Delete</button>

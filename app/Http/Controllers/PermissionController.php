@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PermissionController extends Controller
 {
@@ -13,7 +16,7 @@ class PermissionController extends Controller
     }
 
     public function index(){
-        return Permission::all();
+        return User::all();
     }
     public function store(Request $request)
     {
@@ -25,17 +28,26 @@ class PermissionController extends Controller
     public function show(Request $request)
     {
         $id=$request->input('id');
-        return Permission::where('id',$id)->first();
+        return User::where('id',$id)->first();
     }
 
     public function update(Request $request)
     {
         $id = $request->input('id');
-
-        return Permission::where('id', $id)->update([
-            'name'=>$request->input('name'),
+        $role = Role::find($request->input('role'));
+        $user = User::find($id);
+        $user->update([
+            'role' =>$role->name,
         ]);
-
+        $user->roles()->detach();
+        $user->roles()->attach($role);
+        $permit =  $role->permissions()->pluck('id')->toArray();
+        $user->permissions()->detach();
+        $user->permissions()->attach($permit);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User Role Updated Successfully'
+        ],200);
     }
     public function destroy(Request $request)
     {

@@ -21,7 +21,7 @@ class UserController extends Controller
     }
 
     function RegistrationPage():View{
-        return view('auth.pages.registration-page');
+        return view('dashboard.pages.registration-page');
     }
     function SendOtpPage():View{
         return view('auth.pages.send-otp-page');

@@ -1,4 +1,4 @@
-@extends('auth.layout.app')
+@extends('dashboard.layout.sidenav-layout')
 @section('content')
     @include('auth.components.registration-form')
 @endsection
