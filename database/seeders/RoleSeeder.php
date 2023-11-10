@@ -50,10 +50,6 @@ class RoleSeeder extends Seeder
         $role->permissions()->attach($permission);
         $permission->roles()->attach($role);
 
-
-
-
-
         $adminRole = Role::where('name', 'admin')->first();
         $managerRole = Role::where('name', 'manager')->first();
         $employeeRole = Role::where('name', 'employee')->first();
@@ -61,10 +57,17 @@ class RoleSeeder extends Seeder
         $create_user = Permission::where('name', 'create-user')->first()->id;
         $update_post = Permission::where('name', 'update-post')->first()->id;
 
+        $super = new User();
+        $super->name = 'Admin';
+        $super->role = 'Super Admin';
+        $super->email = 'super@gmail.com';
+        $super->password = bcrypt('123456');
+        $super->save();
+
         $admin = new User();
         $admin->name = 'Admin';
         $admin->role = 'Super Admin';
-        $admin->email = 'admin@gmail.com';
+        $admin->email = 'super@gmail.com';
         $admin->password = bcrypt('123456');
         $admin->save();
         $admin->roles()->attach($adminRole);

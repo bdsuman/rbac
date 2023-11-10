@@ -7,14 +7,6 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-//    public function __construct( ) {
-//
-//        //Permission Check
-//        $this->middleware(['permission:create-post'])->only('store');
-//        $this->middleware(['permission:read-post'])->only('show');
-//        $this->middleware(['permission:update-post'])->only('update');
-//        $this->middleware(['permission:delete-post'])->only('destroy');
-//    }
     /**
      * Display a listing of the resource.
      */
@@ -73,7 +65,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request)
     {
             $this->authorize('update-post');
 

@@ -80,6 +80,16 @@
         <i class="bi bi-list-nested"></i>
         <span class="side-bar-item-caption">Category</span>
     </a>
+    @role('admin')
+        <a href="{{url("/rolePage")}}" class="side-bar-item">
+            <i class="bi bi-list-nested"></i>
+            <span class="side-bar-item-caption">Role</span>
+        </a>
+        <a href="{{url("/permissionPage")}}" class="side-bar-item">
+            <i class="bi bi-list-nested"></i>
+            <span class="side-bar-item-caption">Permission</span>
+        </a>
+    @endrole
     <a href="{{url("/postPage")}}" class="side-bar-item">
         <i class="bi bi-calendar2-event"></i>
         <span class="side-bar-item-caption">Post</span>

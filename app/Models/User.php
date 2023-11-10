@@ -15,7 +15,7 @@ class User extends Authenticatable
         HasFactory,
         Notifiable,
         HasPermissionsTrait;
-    protected $fillable = ['name','email','mobile','password','otp'];
+    protected $fillable = ['name','email','mobile','password','otp','role'];
     protected $attributes = [
         'otp' => '0',
         'mobile'=>''

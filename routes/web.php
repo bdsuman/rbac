@@ -4,8 +4,10 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +57,23 @@ Route::group(['prefix' => '', 'middleware' => ['auth']], function () {
     Route::post("/update-post", [PostController::class, 'update']);
     Route::post("/post-by-id", [PostController::class, 'show']);
 
+    Route::group(['middleware' => 'role:admin'], function() {
+        Route::get('/rolePage', [RoleController::class, 'rolePage']);
+        // Role API
+        Route::post("/create-role", [RoleController::class, 'store']);
+        Route::get("/list-role", [RoleController::class, 'index']);
+        Route::post("/delete-role", [RoleController::class, 'destroy']);
+        Route::post("/update-role", [RoleController::class, 'update']);
+        Route::post("/role-by-id", [RoleController::class, 'show']);
+
+        Route::get('/permissionPage', [PermissionController::class, 'permissionPage']);
+        // Permission API
+        Route::post("/create-permission", [PermissionController::class, 'store']);
+        Route::get("/list-permission", [PermissionController::class, 'index']);
+        Route::post("/delete-permission", [PermissionController::class, 'destroy']);
+        Route::post("/update-permission", [PermissionController::class, 'update']);
+        Route::post("/permission-by-id", [PermissionController::class, 'show']);
+    });
 
     // Category API
     Route::post("/create-category", [CategoryController::class, 'CategoryCreate']);

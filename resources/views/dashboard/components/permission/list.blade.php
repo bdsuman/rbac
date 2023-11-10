@@ -4,7 +4,7 @@
         <div class="card px-5 py-5">
             <div class="row justify-content-between ">
                 <div class="align-items-center col">
-                    <h6>Role</h6>
+                    <h6>Permission</h6>
                 </div>
                 <div class="align-items-center col">
                     <button data-bs-toggle="modal" data-bs-target="#create-modal" class="float-end btn m-0 btn-sm bg-gradient-primary">Create</button>
@@ -16,7 +16,7 @@
                 <thead>
                 <tr class="bg-light">
                     <th>No</th>
-                    <th>Role</th>
+                    <th>Permission</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -39,7 +39,7 @@ async function getList() {
 
 
     showLoader();
-    let res=await axios.get("/list-role");
+    let res=await axios.get("/list-permission");
     hideLoader();
 
     let tableList=$("#tableList");

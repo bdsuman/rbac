@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers;
+use App\Models\Permission;
+use App\Models\Role;
 use Exception;
 use App\Models\User;
 use App\Mail\OTPMail;
@@ -35,19 +37,24 @@ class UserController extends Controller
         return view('auth.pages.reset-pass-page');
     }
 
-   
+
 
 
 
     function UserRegistration(Request $request){
         try {
-            User::create([
-                'firstName' => $request->input('firstName'),
-                'lastName' => $request->input('lastName'),
-                'email' => $request->input('email'),
-                'mobile' => $request->input('mobile'),
-                'password' => Hash::make($request->input('password')),
-            ]);
+            $role = Role::find($request->input('role'));
+            $user=User::create([
+                    'name' => $request->input('name'),
+                    'role' =>$role->name,
+                    'email' => $request->input('email'),
+                    'mobile' => $request->input('mobile'),
+                    'password' => Hash::make($request->input('password')),
+                ]);
+
+            $user->roles()->attach($role);
+
+            $user->permissions()->attach([1,2]);
             return response()->json([
                 'status' => 'success',
                 'message' => 'User Registration Successfully'
@@ -64,7 +71,7 @@ class UserController extends Controller
 
     function UserLogin(Request $request){
         //dd($request->all());
-       
+
        $data = [
                 'email' => $request->email,
                 'password' => $request->password
@@ -100,7 +107,7 @@ class UserController extends Controller
                 Mail::to($email)->send(new SendPasswordMail($new_password));
                 // OTO Code Table Update
                  User::where('email','=',$email)->update(['password'=>Hash::make($new_password)]);
-    
+
                 return response()->json([
                     'status' => 'success',
                     'message' => 'New Password has been send to your email !'
@@ -119,7 +126,7 @@ class UserController extends Controller
                 'message' => 'Failed Try Again'
             ]);
         }
-       
+
     }
 
     function SendOTPCode(Request $request){
@@ -169,15 +176,15 @@ class UserController extends Controller
         return redirect()->route('login');
         // return redirect('/userLogin')->cookie('token','',-1);
     }
-   
+
     public function generateUniqueString($length = 6) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $string = '';
-        
+
         for ($i = 0; $i < $length; $i++) {
             $string .= $characters[random_int(0, strlen($characters) - 1)];
         }
-        
+
         return $string;
     }
 

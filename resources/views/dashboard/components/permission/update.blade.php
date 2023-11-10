@@ -13,17 +13,6 @@
                                 <input type="text" class="form-control" id="roleNameUpdate">
                                 <input class="d-none" id="updateID">
                             </div>
-                            @php
-                                $permissions =  \App\Models\Permission::all();
-                            @endphp
-                            @foreach ($permissions as $key => $permission)
-                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                                    <div class="p-2 border mt-1 mb-2">
-                                        <label class="control-label">{{ Str::headline($permission->name) }}</label>
-                                        <input type="checkbox" class="permissions" name="permissions[]" value="{{ $permission->id }}">
-                                    </div>
-                                </div>
-                            @endforeach
                         </div>
                     </div>
                 </form>
@@ -52,41 +41,24 @@
 
         let roleNameUpdate = document.getElementById('roleNameUpdate').value;
         let updateID = document.getElementById('updateID').value;
-        let checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        let checkedValues = [];
-        checkboxes.forEach(function (checkbox) {
-            if (checkbox.checked) {
-                checkedValues.push(checkbox.value);
-            }
-        });
-        console.log(checkedValues);
+
         if (roleNameUpdate.length === 0) {
             errorToast("Role Name Required !")
-        }else if(checkedValues.length === 0){
-            errorToast("Min 1 Permission Required !")
         }
         else{
-
             document.getElementById('update-modal-close').click();
             showLoader();
-            try {
-                let res = await axios.post("/update-role",{name:roleNameUpdate,permissions:checkedValues,id:updateID})
-                hideLoader();
-                //console.log( res);
-                if(res.status===200){
-                    document.getElementById("update-form").reset();
-                    successToast("Request success !")
-                    await getList();
-                }
-                else{
-                    errorToast("Request fail !")
-                }
-            }catch (e) {
-                errorToast(e)
-                hideLoader();
+            let res = await axios.post("/update-role",{name:roleNameUpdate,id:updateID})
+            hideLoader();
+
+            if(res.status===200 && res.data===1){
+                document.getElementById("update-form").reset();
+                successToast("Request success !")
                 await getList();
             }
-
+            else{
+                errorToast("Request fail !")
+            }
 
 
         }
