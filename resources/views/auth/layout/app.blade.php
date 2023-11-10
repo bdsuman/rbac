@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <title>Payroll Management Login</title>
+    <title>RBAC Management Login</title>
     <link rel="icon" type="image/x-icon" href="{{asset('/favicon.ico')}}" />
     <link href="{{asset('backend/css/bootstrap.css')}}" rel="stylesheet" />
     <link href="{{asset('backend/css/animate.min.css')}}" rel="stylesheet" />

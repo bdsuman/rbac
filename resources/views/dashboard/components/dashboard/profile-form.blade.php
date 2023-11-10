@@ -56,7 +56,7 @@
     getProfile();
     async function getProfile(){
         showLoader();
-        let res=await axios.get("/manager/user-profile")
+        let res=await axios.get("/user-profile")
         hideLoader();
         if(res.status===200 && res.data['status']==='success'){
             let data=res.data['data'];
@@ -83,7 +83,7 @@
         }
         else{
             showLoader();
-            let res=await axios.post("/manager/user-update",{
+            let res=await axios.post("/user-update",{
                 name:name,
                 mobile:mobile,
             })
@@ -118,7 +118,7 @@
         }
         else{
             showLoader();
-            let res=await axios.post("/manager/user-pass-update",{
+            let res=await axios.post("/user-pass-update",{
                 old_password:old_password,
                 new_password:new_password
             })
