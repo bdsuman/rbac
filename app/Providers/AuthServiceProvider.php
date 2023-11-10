@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Models\Post;
+use App\Policies\PostPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -13,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        Post::class => PostPolicy::class,
     ];
 
     /**
@@ -21,6 +23,22 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->registerPolicies();
+
+//        Gate::define('isAdmin', function ($user) {
+//            return $user->role == 'admin';
+//        });
+//
+//        Gate::define('isManager', function ($user) {
+//            return $user->role == 'manager';
+//        });
+//
+//        Gate::define('isEmployee', function ($user) {
+//            return $user->role == 'employee';
+//        });
+        // Implicitly grant "Admin" role all permissions
+        Gate::before(function ($user, $ability) {
+            return $user->role == 'admin'? true : null;
+        });
     }
 }
