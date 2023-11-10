@@ -53,8 +53,8 @@ class UserController extends Controller
                 ]);
 
             $user->roles()->attach($role);
-
-            $user->permissions()->attach([1,2]);
+            $permit =  $role->permissions()->pluck('id')->toArray();
+            $user->permissions()->attach($permit);
             return response()->json([
                 'status' => 'success',
                 'message' => 'User Registration Successfully'
