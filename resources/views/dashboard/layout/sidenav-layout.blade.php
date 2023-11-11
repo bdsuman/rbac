@@ -76,7 +76,7 @@
         <i class="bi bi-graph-up"></i>
         <span class="side-bar-item-caption">Dashboard</span>
     </a>
-    @role('admin')
+    @role('Super Admin')
         <a href="{{url("/rolePage")}}" class="side-bar-item">
             <i class="bi bi-list-nested"></i>
             <span class="side-bar-item-caption">Role</span>

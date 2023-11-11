@@ -9,15 +9,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12 p-1">
-                                <label class="form-label">Role *</label>
-                                @php
-                                    $roles =  \App\Models\Role::all();
-                                @endphp
-                                <select class="form-control" id="roleUpdate">
-                                    <option value="">--select--</option>
-                                    @foreach($roles as $role)
-                                        <option value="{{$role->id}}">{{$role->name}}</option>
-                                    @endforeach
+                                <label for="roleUpdate">Role *</label>
+                                <select class="form-control form-select" id="roleUpdate">
+                                    <option value="" >--select role--</option>
+
                                 </select>
                                 <input class="d-none" id="updateID">
                             </div>
@@ -36,13 +31,22 @@
 
 <script>
 
+    async function UpdateFillRoleDropDown(){
+        let res = await axios.get("/list-role")
+        res.data.forEach(function (item,i) {
+            let option=`<option value="${item['id']}">${item['name']}</option>`
+            $("#roleUpdate").append(option);
+        })
+    }
 
+    UpdateFillRoleDropDown();
    async function FillUpUpdateForm(id){
         document.getElementById('updateID').value=id;
         showLoader();
-        let res=await axios.post("/permission-by-id",{id:id})
+        let res = await axios.post("/permission-by-id",{id:id})
+        //console.log(res);
         hideLoader();
-        document.getElementById('roleUpdate').value=res.data['role'];
+        document.getElementById('roleUpdate').value=res.data[0];
     }
 
     async function Update() {

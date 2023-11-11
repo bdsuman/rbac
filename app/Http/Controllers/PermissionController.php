@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class PermissionController extends Controller
 {
@@ -16,7 +17,26 @@ class PermissionController extends Controller
     }
 
     public function index(){
-        return User::all();
+        return User::where('id','!=',1)->get();
+    }
+    public function listPermissions(Request $request){
+        $id = $request->input('id');
+        $role = Role::find($id);
+        $role_permit =  $role->permissions()->pluck('id')->toArray();
+        $all_permit = Permission::all();
+        $new_collection = collect($all_permit)->map(function ($arr) use ($role_permit) {
+            $arr['name'] = Str::headline($arr->name);
+            if(in_array($arr->id,$role_permit)){
+                $arr['checked'] = 'checked';
+            }else{
+                $arr['checked'] = '';
+            }
+            return $arr;
+        });
+
+
+        return  $new_collection;
+
     }
     public function store(Request $request)
     {
@@ -28,7 +48,9 @@ class PermissionController extends Controller
     public function show(Request $request)
     {
         $id=$request->input('id');
-        return User::where('id',$id)->first();
+        $user = User::find($id);
+        return $user->roles()->pluck('id')->toArray();
+
     }
 
     public function update(Request $request)
@@ -52,6 +74,6 @@ class PermissionController extends Controller
     public function destroy(Request $request)
     {
         $id=$request->input('id');
-        return Permission::where('id',$id)->delete();
+        return User::where('id',$id)->delete();
     }
 }

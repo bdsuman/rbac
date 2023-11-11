@@ -24,7 +24,7 @@ Route::get('/userLogin',[UserController::class,'LoginPage'])->name('login');
 Route::get('/sendOtp',[UserController::class,'SendOtpPage']);
 Route::get('/verifyOtp',[UserController::class,'VerifyOTPPage']);
 Route::get('/sendPassword',[UserController::class,'SendPasswordPage']);
-
+Route::post("/list-permission-assign", [PermissionController::class, 'listPermissions']);
 Route::group(['prefix' => '', 'middleware' => ['auth']], function () {
     // registration
     Route::get('/userRegistration',[UserController::class,'RegistrationPage']);
@@ -63,6 +63,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth']], function () {
         // Permission API
         Route::post("/create-permission", [PermissionController::class, 'store']);
         Route::get("/list-permission", [PermissionController::class, 'index']);
+
         Route::post("/delete-permission", [PermissionController::class, 'destroy']);
         Route::post("/update-permission", [PermissionController::class, 'update']);
         Route::post("/permission-by-id", [PermissionController::class, 'show']);

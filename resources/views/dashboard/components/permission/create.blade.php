@@ -19,24 +19,20 @@
                                         <input id="name" placeholder="First Name" class="form-control" type="text"/>
                                     </div>
                                     <div class="col-md-12 p-2">
-                                        <label>Role</label>
-                                        @php
-                                            $roles =  \App\Models\Role::all();
-                                        @endphp
+                                        <label for="role">Role</label>
+
                                         <select class="form-control" id="role">
                                             <option value="">--select--</option>
-                                            @foreach($roles as $role)
-                                                <option value="{{$role->id}}">{{$role->name}}</option>
-                                            @endforeach
+
                                         </select>
 
                                     </div>
                                     <div class="col-md-6 p-2">
-                                        <label>Mobile Number</label>
-                                        <input id="mobile" placeholder="Mobile" class="form-control" type="mobile"/>
+                                        <label for="mobile">Mobile Number</label>
+                                        <input id="mobile" placeholder="Mobile" class="form-control" type="text"/>
                                     </div>
                                     <div class="col-md-6 p-2">
-                                        <label>Password</label>
+                                        <label for="password">Password</label>
                                         <input id="password" placeholder="User Password" class="form-control" type="password"/>
                                     </div>
                                 </div>
@@ -55,7 +51,15 @@
 
 
 <script>
+    async function FillRoleDropDown(){
+        let res = await axios.get("/list-role")
+        res.data.forEach(function (item,i) {
+            let option=`<option value="${item['id']}">${item['name']}</option>`
+            $("#role").append(option);
+        })
+    }
 
+   FillRoleDropDown();
     async function Save() {
 
         let email = document.getElementById('email').value;

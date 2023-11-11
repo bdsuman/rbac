@@ -14,7 +14,7 @@ class RoleController extends Controller
     }
 
     public function index(){
-        return Role::all();
+        return Role::where('id','!=',1)->get();
     }
     public function store(Request $request)
     {

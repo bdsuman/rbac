@@ -1,5 +1,5 @@
 <div class="modal" id="update-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Update Role</h5>
@@ -13,17 +13,8 @@
                                 <input type="text" class="form-control" id="roleNameUpdate">
                                 <input class="d-none" id="updateID">
                             </div>
-                            @php
-                                $permissions =  \App\Models\Permission::all();
-                            @endphp
-                            @foreach ($permissions as $key => $permission)
-                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                                    <div class="p-2 border mt-1 mb-2">
-                                        <label class="control-label">{{ Str::headline($permission->name) }}</label>
-                                        <input type="checkbox" class="permissions" name="permissions[]" value="{{ $permission->id }}">
-                                    </div>
-                                </div>
-                            @endforeach
+                            <div style="display: flex;" class="row" id="updatePermission">
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -38,11 +29,25 @@
 
 
 <script>
+    async function UpdateFillPermissionList(id){
+        let res = await axios.post("/list-permission-assign",{id:id})
+        res.data.forEach(function (item,i) {
 
+            let option = `<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                                    <div class="p-2 border mt-1 mb-2">
+                                        <label class="control-label">${item['name']}</label>
+                                        <input type="checkbox" class="permissions" ${item['checked']} name="permissions[]" value="${item['id']}">
+                                    </div>
+                            </div>`;
+            $("#updatePermission").append(option);
+        })
+    }
 
    async function FillUpUpdateForm(id){
         document.getElementById('updateID').value=id;
         showLoader();
+       $ ("#updatePermission").html ("");
+       await UpdateFillPermissionList(id);
         let res=await axios.post("/role-by-id",{id:id})
         hideLoader();
         document.getElementById('roleNameUpdate').value=res.data['name'];
