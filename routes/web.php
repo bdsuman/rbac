@@ -50,7 +50,7 @@ Route::group(['prefix' => '', 'middleware' => ['auth']], function () {
     Route::post("/update-post", [PostController::class, 'update']);
     Route::post("/post-by-id", [PostController::class, 'show']);
 
-    Route::group(['middleware' => 'role:admin'], function() {
+    Route::group(['middleware' => 'role'], function() {
         Route::get('/rolePage', [RoleController::class, 'rolePage']);
         // Role API
         Route::post("/create-role", [RoleController::class, 'store']);
